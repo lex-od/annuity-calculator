@@ -1,16 +1,8 @@
-import { useState } from "react";
 import css from "./RangeInput.module.scss";
 
-export default function RangeInput({ ...rest }) {
-    const [value, setValue] = useState(1);
+export default function RangeInput({ className, ...rest }) {
+    const classes = [css.rangeInp];
+    if (className) classes.push(className);
 
-    return (
-        <input
-            type="range"
-            value={value}
-            onChange={(e) => setValue(e.target.value)}
-            className={css.rangeInp}
-            {...rest}
-        />
-    );
+    return <input type="range" className={classes.join(" ")} {...rest} />;
 }

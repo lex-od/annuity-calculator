@@ -7,6 +7,8 @@
     appearance: none;
     outline: none;
 
+    // 📌 Полоса Webkit и Mozilla
+
     &::-webkit-slider-runnable-track {
         height: 3px;
         cursor: pointer;
@@ -17,6 +19,8 @@
         cursor: pointer;
         background-color: #5f5f5f;
     }
+
+    // 📌 Ползунок Webkit и Mozilla
 
     &::-webkit-slider-thumb {
         position: relative;
