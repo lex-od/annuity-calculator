@@ -7,7 +7,7 @@ export default function TwinInput({
     onChange,
     min,
     max,
-    step,
+    step = 1,
 }) {
     const classes = [css.twinInp];
     if (className) classes.push(className);
