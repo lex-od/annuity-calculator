@@ -29,6 +29,8 @@ export default function AnnuityCalculator() {
     let initPayMin = 0;
     let initPayMax = 10000;
 
+    let cost = 1144;
+
     return (
         <div className={css.annuityCalculator}>
             <TwinInput
@@ -52,6 +54,8 @@ export default function AnnuityCalculator() {
                 min={TERM_MIN}
                 max={TERM_MAX}
             />
+
+            <p>Стоимость: ${cost}</p>
         </div>
     );
 }
