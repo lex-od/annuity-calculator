@@ -7,9 +7,9 @@ const RATE = 0.088 / 12;
 
 const initParams = {
     pay: 100,
-    fee: 1000,
+    fee: 572,
     term: 1,
-    cost: 3000,
+    cost: 1717,
 };
 
 export default function AnnuityCalculator() {
@@ -25,27 +25,56 @@ export default function AnnuityCalculator() {
         setChanged(e.target.name);
     };
 
+    const { pay, fee, term, cost } = params;
+
+    const getPay = () =>
+        Math.round(
+            ((cost - fee) * RATE * (1 + RATE) ** (term * 12)) /
+                ((1 + RATE) ** (term * 12) - 1)
+        );
+
+    const getMinFee = () =>
+        Math.round(
+            (pay * ((1 + RATE) ** (term * 12) - 1)) /
+                ((1 / FEE_MIN_PART - 1) * RATE * (1 + RATE) ** (term * 12))
+        );
+
+    const getCostWithMinFee = () =>
+        Math.round(
+            (pay * ((1 + RATE) ** (term * 12) - 1)) /
+                ((1 - FEE_MIN_PART) * RATE * (1 + RATE) ** (term * 12))
+        );
+
+    const getCost = () =>
+        Math.round(
+            (pay * ((1 + RATE) ** (term * 12) - 1)) /
+                (RATE * (1 + RATE) ** (term * 12)) +
+                fee
+        );
+
+    const minFee = getMinFee();
+
     useEffect(() => {
         if (!changed) return;
 
-        switch (changed) {
-            case "pay":
-                break;
-            case "fee":
-                break;
-            case "term":
-                break;
-            default: // Чтобы ESLint не ругался
+        if (changed === "fee") {
+            setParams((state) => ({ ...state, pay: getPay() }));
+        }
+
+        if (changed === "term" || changed === "pay") {
+            // if (fee < minFee) {
+            setParams((state) => ({
+                ...state,
+                fee: minFee,
+                cost: getCostWithMinFee(),
+            }));
+            // } else {
+            //     setParams((state) => ({ ...state, cost: getCost() }));
+            // }
         }
 
         setChanged(null);
     }, [changed]);
-
-    const { pay, fee, term, cost } = params;
-
-    const getPay = () =>
-        ((cost - fee) * RATE * (1 + RATE) ** (term * 12)) /
-        ((1 + RATE) ** (term * 12) - 1);
 
     return (
         <div className={css.annuityCalculator}>
@@ -61,7 +90,7 @@ export default function AnnuityCalculator() {
             <TwinInput
                 value={fee}
                 onChange={handleSetParams}
-                min={Math.round(cost * FEE_MIN_PART)}
+                min={minFee}
                 max={cost}
                 name="fee"
             />
