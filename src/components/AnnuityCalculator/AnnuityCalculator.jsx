@@ -11,10 +11,12 @@ const initParams = {
     term: 1,
     cost: 1717,
 };
+const initMinFee = 572;
 
 export default function AnnuityCalculator() {
     const [params, setParams] = useState(initParams);
     const [changed, setChanged] = useState(null);
+    const [minFee, setMinFee] = useState(initMinFee);
 
     const handleSetParams = (e) => {
         setParams((state) => ({
@@ -36,13 +38,16 @@ export default function AnnuityCalculator() {
 
         if (changed === "term" || changed === "pay") {
             const newPay = Math.max(100, pay);
+            const newMinFee = getMinFee(newPay, term);
 
             setParams((state) => ({
                 ...state,
                 pay: newPay,
-                fee: getMinFee(newPay, term),
+                fee: newMinFee,
                 cost: getCostWithMinFee(newPay, term),
             }));
+
+            setMinFee(newMinFee);
         }
 
         setChanged(null);
@@ -62,7 +67,7 @@ export default function AnnuityCalculator() {
             <TwinInput
                 value={fee}
                 onChange={handleSetParams}
-                min={getMinFee(pay, term)}
+                min={minFee}
                 max={cost}
                 name="fee"
             />
