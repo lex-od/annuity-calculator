@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import css from "./AnnuityCalculator.module.scss";
 import TwinInput from "../TwinInput";
+import annuityMath from "../../services/annuityMath";
 
-const FEE_MIN_PART = 1 / 3;
-const RATE = 0.088 / 12;
+const { getPay, getMinFee, getCostWithMinFee } = annuityMath;
 
 const initParams = {
     pay: 100,
@@ -27,54 +27,26 @@ export default function AnnuityCalculator() {
 
     const { pay, fee, term, cost } = params;
 
-    const getPay = () =>
-        Math.round(
-            ((cost - fee) * RATE * (1 + RATE) ** (term * 12)) /
-                ((1 + RATE) ** (term * 12) - 1)
-        );
-
-    const getMinFee = () =>
-        Math.round(
-            (pay * ((1 + RATE) ** (term * 12) - 1)) /
-                ((1 / FEE_MIN_PART - 1) * RATE * (1 + RATE) ** (term * 12))
-        );
-
-    const getCostWithMinFee = () =>
-        Math.round(
-            (pay * ((1 + RATE) ** (term * 12) - 1)) /
-                ((1 - FEE_MIN_PART) * RATE * (1 + RATE) ** (term * 12))
-        );
-
-    const getCost = () =>
-        Math.round(
-            (pay * ((1 + RATE) ** (term * 12) - 1)) /
-                (RATE * (1 + RATE) ** (term * 12)) +
-                fee
-        );
-
-    const minFee = getMinFee();
-
     useEffect(() => {
         if (!changed) return;
 
         if (changed === "fee") {
-            setParams((state) => ({ ...state, pay: getPay() }));
+            setParams((state) => ({ ...state, pay: getPay(fee, term, cost) }));
         }
 
         if (changed === "term" || changed === "pay") {
-            // if (fee < minFee) {
+            const newPay = Math.max(100, pay);
+
             setParams((state) => ({
                 ...state,
-                fee: minFee,
-                cost: getCostWithMinFee(),
+                pay: newPay,
+                fee: getMinFee(newPay, term),
+                cost: getCostWithMinFee(newPay, term),
             }));
-            // } else {
-            //     setParams((state) => ({ ...state, cost: getCost() }));
-            // }
         }
 
         setChanged(null);
-    }, [changed]);
+    }, [changed]); // eslint-disable-line
 
     return (
         <div className={css.annuityCalculator}>
@@ -90,7 +62,7 @@ export default function AnnuityCalculator() {
             <TwinInput
                 value={fee}
                 onChange={handleSetParams}
-                min={minFee}
+                min={getMinFee(pay, term)}
                 max={cost}
                 name="fee"
             />
