@@ -8,6 +8,7 @@ export default function TwinInput({
     min,
     max,
     step = 1,
+    name,
 }) {
     const classes = [css.twinInp];
     if (className) classes.push(className);
@@ -22,6 +23,7 @@ export default function TwinInput({
                 min={min}
                 max={max}
                 step={step}
+                name={name}
             />
         </div>
     );

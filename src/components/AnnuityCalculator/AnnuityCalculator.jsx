@@ -1,52 +1,80 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import css from "./AnnuityCalculator.module.scss";
 import TwinInput from "../TwinInput";
 
 const FEE_MIN_PART = 1 / 3;
 const RATE = 0.088 / 12;
 
+const initParams = {
+    pay: 100,
+    fee: 1000,
+    term: 1,
+    cost: 3000,
+};
+
 export default function AnnuityCalculator() {
-    const [pay, setPay] = useState(100);
-    const [fee, setFee] = useState(1000);
-    const [term, setTerm] = useState(1);
-    const [cost, setCost] = useState(3000);
+    const [params, setParams] = useState(initParams);
+    const [changed, setChanged] = useState(null);
 
-    const handleSetPay = (e) => {
-        setPay(Number(e.target.value));
+    const handleSetParams = (e) => {
+        setParams((state) => ({
+            ...state,
+            [e.target.name]: Number(e.target.value),
+        }));
+
+        setChanged(e.target.name);
     };
 
-    const handleSetFee = (e) => {
-        setFee(Number(e.target.value));
-    };
+    useEffect(() => {
+        if (!changed) return;
 
-    const handleSetTerm = (e) => {
-        setTerm(Number(e.target.value));
-    };
+        switch (changed) {
+            case "pay":
+                break;
+            case "fee":
+                break;
+            case "term":
+                break;
+            default: // Чтобы ESLint не ругался
+        }
 
-    const payTmp =
-        (cost * RATE * (1 + RATE) ** (term * 12)) /
+        setChanged(null);
+    }, [changed]);
+
+    const { pay, fee, term, cost } = params;
+
+    const getPay = () =>
+        ((cost - fee) * RATE * (1 + RATE) ** (term * 12)) /
         ((1 + RATE) ** (term * 12) - 1);
 
     return (
         <div className={css.annuityCalculator}>
             <TwinInput
                 value={pay}
-                onChange={handleSetPay}
+                onChange={handleSetParams}
                 min={100}
                 max={10000}
                 step={50}
+                name="pay"
             />
 
             <TwinInput
                 value={fee}
-                onChange={handleSetFee}
+                onChange={handleSetParams}
                 min={Math.round(cost * FEE_MIN_PART)}
                 max={cost}
+                name="fee"
             />
 
-            <TwinInput value={term} onChange={handleSetTerm} min={1} max={30} />
+            <TwinInput
+                value={term}
+                onChange={handleSetParams}
+                min={1}
+                max={30}
+                name="term"
+            />
 
-            <p>Стоимость: ${payTmp}</p>
+            <p>Стоимость: ${cost}</p>
         </div>
     );
 }
