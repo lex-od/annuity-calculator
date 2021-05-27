@@ -18,13 +18,10 @@ export default function AnnuityCalculator() {
     const [changed, setChanged] = useState(null);
     const [minFee, setMinFee] = useState(initMinFee);
 
-    const handleSetParams = (e) => {
-        setParams((state) => ({
-            ...state,
-            [e.target.name]: Number(e.target.value),
-        }));
+    const handleSetParams = ({ name, value }) => {
+        setParams((state) => ({ ...state, [name]: value }));
 
-        setChanged(e.target.name);
+        setChanged(name);
     };
 
     const { pay, fee, term, cost } = params;
@@ -37,14 +34,12 @@ export default function AnnuityCalculator() {
         }
 
         if (changed === "term" || changed === "pay") {
-            const newPay = Math.max(100, pay);
-            const newMinFee = getMinFee(newPay, term);
+            const newMinFee = getMinFee(pay, term);
 
             setParams((state) => ({
                 ...state,
-                pay: newPay,
                 fee: newMinFee,
-                cost: getCostWithMinFee(newPay, term),
+                cost: getCostWithMinFee(pay, term),
             }));
 
             setMinFee(newMinFee);
@@ -56,28 +51,28 @@ export default function AnnuityCalculator() {
     return (
         <div className={css.annuityCalculator}>
             <TwinInput
+                name="pay"
                 value={pay}
                 onChange={handleSetParams}
                 min={100}
                 max={10000}
                 step={50}
-                name="pay"
             />
 
             <TwinInput
+                name="fee"
                 value={fee}
                 onChange={handleSetParams}
                 min={minFee}
                 max={cost}
-                name="fee"
             />
 
             <TwinInput
+                name="term"
                 value={term}
                 onChange={handleSetParams}
                 min={1}
                 max={30}
-                name="term"
             />
 
             <p>Стоимость: ${cost}</p>

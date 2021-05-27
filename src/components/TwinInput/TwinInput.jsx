@@ -3,45 +3,37 @@ import RangeInput from "../RangeInput";
 
 export default function TwinInput({
     className,
+    name,
     value,
     onChange,
     min,
     max,
     step = 1,
-    name,
 }) {
     const classes = [css.twinInp];
     if (className) classes.push(className);
 
-    const handleChange = ({ target: { name, value } }) => {
-        let numVal = Number(value);
+    const handleChange = (e) => {
+        let value = Number(e.target.value);
 
-        if (!Number.isInteger(numVal)) return;
+        if (!Number.isInteger(value)) return;
 
-        if (numVal < 0) numVal = 0;
-        if (numVal > max) numVal = max;
+        if (value < 0) value = 0;
+        if (value > max) value = max;
 
-        onChange({ target: { name, value: numVal } });
+        onChange({ name, value });
     };
 
     return (
         <div className={classes.join(" ")}>
-            <p>{value}</p>
-            {/* <input
-                type="text"
-                value={value}
-                onChange={handleChange}
-                name={name}
-                style={{ marginBottom: 20, marginTop: 20 }}
-            /> */}
+            <input type="text" value={value} onChange={handleChange} />
 
             <RangeInput
                 value={value}
-                onChange={onChange}
+                onChange={handleChange}
                 min={min}
                 max={max}
                 step={step}
-                name={name}
             />
         </div>
     );
