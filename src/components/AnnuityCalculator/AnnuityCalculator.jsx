@@ -50,32 +50,41 @@ export default function AnnuityCalculator() {
 
     return (
         <div className={css.annuityCalculator}>
-            <TwinInput
-                name="pay"
-                value={pay}
-                onChange={handleSetParams}
-                min={100}
-                max={10000}
-                step={50}
-            />
+            <div className={css.twinArea}>
+                <TwinInput
+                    title="Комфортный месячный платеж"
+                    className={css.paramInp}
+                    name="pay"
+                    value={pay}
+                    onChange={handleSetParams}
+                    min={100}
+                    max={10000}
+                    step={50}
+                />
 
-            <TwinInput
-                name="fee"
-                value={fee}
-                onChange={handleSetParams}
-                min={minFee}
-                max={cost}
-            />
+                <TwinInput
+                    title="Первоначальный взнос"
+                    className={css.paramInp}
+                    name="fee"
+                    value={fee}
+                    onChange={handleSetParams}
+                    min={minFee}
+                    max={cost}
+                />
 
-            <TwinInput
-                name="term"
-                value={term}
-                onChange={handleSetParams}
-                min={1}
-                max={30}
-            />
+                <TwinInput
+                    title="Срок кредитования"
+                    className={css.paramInp}
+                    name="term"
+                    value={term}
+                    onChange={handleSetParams}
+                    min={1}
+                    max={30}
+                    unit="year"
+                />
+            </div>
 
-            <p>Стоимость: ${cost}</p>
+            <p>Стоимость: {cost} $</p>
         </div>
     );
 }

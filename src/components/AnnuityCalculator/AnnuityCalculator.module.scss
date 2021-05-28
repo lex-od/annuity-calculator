@@ -1,3 +1,13 @@
 .annuityCalculator {
     padding: 50px 0;
 }
+
+.twinArea {
+    width: 700px;
+}
+
+.paramInp {
+    &:not(:last-child) {
+        margin-bottom: 15px;
+    }
+}
