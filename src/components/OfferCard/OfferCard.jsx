@@ -4,7 +4,6 @@ import IconButton from "../IconButton/IconButton";
 import { annuityMath } from "../../services";
 
 export default function OfferCard({
-    className,
     display,
     term,
     onTermChange,
@@ -13,33 +12,47 @@ export default function OfferCard({
     credit,
 }) {
     const handleDec = () => {
-        console.log("---");
         if (term <= min) return;
 
         onTermChange({ name: "term", value: term - 1 });
     };
 
     const handleInc = () => {
-        console.log("+++");
         if (term >= max) return;
 
         onTermChange({ name: "term", value: term + 1 });
     };
 
     return (
-        <div className={className}>
-            <IconButton svg={`${buttonSprite}#minus`} onClick={handleDec} />
+        <div className={css.card}>
+            <h2 className={css.title}>Стоимость объекта</h2>
 
-            <p>
-                <span>{display}</span>
-                <span>$</span>
-            </p>
+            <div className={css.controls}>
+                <IconButton svg={`${buttonSprite}#minus`} onClick={handleDec} />
 
-            <IconButton svg={`${buttonSprite}#plus`} onClick={handleInc} />
+                <p className={css.display}>
+                    {display}
+                    <span className={css.unit}>$</span>
+                </p>
 
-            <p>{Number((annuityMath.RATE * 12 * 100).toFixed(1))}</p>
+                <IconButton svg={`${buttonSprite}#plus`} onClick={handleInc} />
+            </div>
 
-            <p>{credit}</p>
+            <div className={css.info}>
+                <div className={css.rate}>
+                    <p className={css.rateTitle}>Процентная ставка</p>
+                    <p className={css.rateValue}>
+                        {Number((annuityMath.RATE * 12 * 100).toFixed(1))} %
+                    </p>
+                </div>
+
+                <div>
+                    <p className={css.creditTitle}>Сумма кредита</p>
+                    <p className={css.creditValue}>{credit} $</p>
+                </div>
+            </div>
+
+            <button className={css.order}>Оставить заявку</button>
         </div>
     );
 }

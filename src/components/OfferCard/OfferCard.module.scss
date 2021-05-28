@@ -1,0 +1,75 @@
+.card {
+    padding: 15px;
+    width: 320px;
+
+    border-radius: 5px;
+    background-color: #fff;
+    box-shadow: rgba(32, 22, 0, 0.3) 0px 1px 5px 0.1px;
+}
+
+.title {
+    margin: 0 0 18px;
+    font-weight: 400;
+}
+
+.controls {
+    display: flex;
+    align-items: center;
+    margin-bottom: 18px;
+}
+
+.display {
+    margin: 0 15px;
+
+    color: #7a0711;
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.unit {
+    margin-left: 8px;
+}
+
+.info {
+    display: flex;
+    margin-bottom: 18px;
+}
+
+.rate {
+    margin-right: 30px;
+}
+
+.rateTitle {
+    margin: 0 0 10px 0;
+    font-size: 14px;
+}
+
+.rateValue {
+    margin: 0;
+    font-weight: 700;
+}
+
+.creditTitle {
+    margin: 0 0 10px 0;
+    font-size: 14px;
+}
+
+.creditValue {
+    margin: 0;
+    font-weight: 700;
+}
+
+.order {
+    height: 34px;
+    width: 100%;
+
+    cursor: pointer;
+    border-radius: 5px;
+    border: none;
+    box-shadow: 0 1px 5px 0.1px rgba(32, 22, 0, 0.26);
+    background-color: #7a0711;
+
+    color: #ffffff;
+    font-size: 14px;
+    letter-spacing: 0.04em;
+}
