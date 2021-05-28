@@ -1,7 +1,10 @@
 import css from "./OfferCard.module.scss";
+import buttonSprite from "../../assets/buttonSprite.svg";
+import IconButton from "../IconButton/IconButton";
 import { annuityMath } from "../../services";
 
 export default function OfferCard({
+    className,
     display,
     term,
     onTermChange,
@@ -10,31 +13,29 @@ export default function OfferCard({
     credit,
 }) {
     const handleDec = () => {
+        console.log("---");
         if (term <= min) return;
 
         onTermChange({ name: "term", value: term - 1 });
     };
 
     const handleInc = () => {
+        console.log("+++");
         if (term >= max) return;
 
         onTermChange({ name: "term", value: term + 1 });
     };
 
     return (
-        <div>
-            <button type="button" onClick={handleDec}>
-                -
-            </button>
+        <div className={className}>
+            <IconButton svg={`${buttonSprite}#minus`} onClick={handleDec} />
 
             <p>
                 <span>{display}</span>
                 <span>$</span>
             </p>
 
-            <button type="button" onClick={handleInc}>
-                +
-            </button>
+            <IconButton svg={`${buttonSprite}#plus`} onClick={handleInc} />
 
             <p>{Number((annuityMath.RATE * 12 * 100).toFixed(1))}</p>
 
