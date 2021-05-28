@@ -1,5 +1,42 @@
-.annuityCalculator {
-    padding: 50px 0;
+.annuityCalc {
+    padding: 100px 0 50px;
+}
+
+.annuityCalcTitle {
+    position: relative;
+
+    margin: 0 0 30px 0;
+
+    text-transform: uppercase;
+    font-size: 26px;
+    font-weight: 400;
+
+    &::before {
+        position: absolute;
+        left: 18px;
+        bottom: -3px;
+        content: "КАЛЬКУЛЯТОР ИПОТЕКИ";
+
+        color: rgba(0, 0, 0, 0.1);
+        font-size: 42px;
+        letter-spacing: 0.02em;
+    }
+}
+
+.calcTitle {
+    margin: 0 0 5px 0;
+
+    font-weight: 400;
+    font-size: 18px;
+}
+
+.calc {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 20px;
+
+    border-top: 1px solid rgb(207, 207, 207);
 }
 
 .twinArea {

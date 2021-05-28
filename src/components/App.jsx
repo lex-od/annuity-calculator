@@ -1,4 +1,3 @@
-import "./App.module.scss";
 import Container from "./Container";
 import AnnuityCalculator from "./AnnuityCalculator";
 

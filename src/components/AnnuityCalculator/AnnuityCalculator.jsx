@@ -50,49 +50,55 @@ export default function AnnuityCalculator() {
     }, [changed]); // eslint-disable-line
 
     return (
-        <div className={css.annuityCalculator}>
-            <div className={css.twinArea}>
-                <TwinInput
-                    title="Комфортный месячный платеж"
-                    className={css.paramInp}
-                    name="pay"
-                    value={pay}
-                    onChange={handleSetParams}
-                    min={100}
-                    max={10000}
-                    step={50}
-                />
+        <div className={css.annuityCalc}>
+            <h1 className={css.annuityCalcTitle}>Калькулятор ипотеки</h1>
 
-                <TwinInput
-                    title="Первоначальный взнос"
-                    className={css.paramInp}
-                    name="fee"
-                    value={fee}
-                    onChange={handleSetParams}
-                    min={minFee}
-                    max={cost}
-                />
+            <h2 className={css.calcTitle}>Расчет стоимости объекта</h2>
 
-                <TwinInput
-                    title="Срок кредитования"
-                    className={css.paramInp}
-                    name="term"
-                    value={term}
-                    onChange={handleSetParams}
+            <div className={css.calc}>
+                <div className={css.twinArea}>
+                    <TwinInput
+                        title="Комфортный месячный платеж"
+                        className={css.paramInp}
+                        name="pay"
+                        value={pay}
+                        onChange={handleSetParams}
+                        min={100}
+                        max={10000}
+                        step={50}
+                    />
+
+                    <TwinInput
+                        title="Первоначальный взнос"
+                        className={css.paramInp}
+                        name="fee"
+                        value={fee}
+                        onChange={handleSetParams}
+                        min={minFee}
+                        max={cost}
+                    />
+
+                    <TwinInput
+                        title="Срок кредитования"
+                        className={css.paramInp}
+                        name="term"
+                        value={term}
+                        onChange={handleSetParams}
+                        min={1}
+                        max={30}
+                        unit="year"
+                    />
+                </div>
+
+                <OfferCard
+                    display={cost}
+                    term={term}
+                    onTermChange={handleSetParams}
                     min={1}
                     max={30}
-                    unit="year"
+                    credit={cost - fee}
                 />
             </div>
-
-            <OfferCard
-                display={cost}
-                term={term}
-                onTermChange={handleSetParams}
-                min={1}
-                max={30}
-                credit={cost - fee}
-            />
         </div>
     );
 }
