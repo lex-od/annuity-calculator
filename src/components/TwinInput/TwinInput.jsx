@@ -12,9 +12,6 @@ export default function TwinInput({
     step = 1,
     unit = "dollar",
 }) {
-    const classes = [css.twinInp];
-    if (className) classes.push(className);
-
     const handleChange = (e) => {
         let value = Number(e.target.value);
 
@@ -50,7 +47,7 @@ export default function TwinInput({
     };
 
     return (
-        <div className={classes.join(" ")}>
+        <div className={className}>
             <label className={css.textLabel}>
                 <span className={css.textLabelText}>{title}</span>
                 <input

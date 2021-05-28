@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import css from "./AnnuityCalculator.module.scss";
 import TwinInput from "../TwinInput";
-import annuityMath from "../../services/annuityMath";
+import OfferCard from "../OfferCard/OfferCard";
+import { annuityMath } from "../../services";
 
 const { getPay, getMinFee, getCostWithMinFee } = annuityMath;
 
@@ -84,7 +85,14 @@ export default function AnnuityCalculator() {
                 />
             </div>
 
-            <p>Стоимость: {cost} $</p>
+            <OfferCard
+                display={cost}
+                term={term}
+                onTermChange={handleSetParams}
+                min={1}
+                max={30}
+                credit={cost - fee}
+            />
         </div>
     );
 }

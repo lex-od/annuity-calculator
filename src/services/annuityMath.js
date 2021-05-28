@@ -20,6 +20,7 @@ const getCostWithMinFee = (pay, term) =>
     );
 
 const annuityMath = {
+    RATE,
     getPay,
     getMinFee,
     getCostWithMinFee,
